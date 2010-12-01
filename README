@@ -1,0 +1,39 @@
+FactoryLib
+==========
+
+This is a simple data factory class - for generating rows in a database or 
+associative arrays of data, normally used in testing. To use it include 
+factory_lib.php and then define your tables. The database connection is 
+the basic mysql_* functions.
+
+include dirname(__FILE__) . "/factory_lib.php" ;
+
+Factory::$factory_data['my_table_name'] = array('forename' => 'Jeremy', 
+												'surname' => Wilkins, 'age' => 32) ;
+
+This will define the default data - you can create a row in the database
+with this data by doing
+
+Factory::create('my_table_name') ;
+
+and just get an array of data using
+
+Factory::hash('my_table_name') ;
+
+Either of these take a second parameter of overriding data, and fields
+not set will use the defaults, eg
+
+Factory::create('my_table_name', array('age' => 21)) ;
+
+You can also include the magic value {{counter}} in strings for creating
+multiple rows, each with unique data - eg.
+
+Factory::$factory_data['testing'] => array('name' => 'Test User {{counter}}')
+for($i = 0; $i < 5; $i++)
+	Factory::create('testing') ;
+
+Will create 5 rows, with names Test User 1 to Test User 5.
+
+You can also use UNIX_TIMESTAMP() and NOW() as magic string values - these 
+will get passed through to mysql automatically rather than being escaped and
+inserted as text.
