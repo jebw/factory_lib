@@ -36,7 +36,7 @@ class Factory {
 		if (mysql_query($sql)) return mysql_insert_id() ;
 
 		if ($GLOBALS['show_db_errors'])
-			die("UNABLE TO INSERT DATA IN insertRow<br />".mysql_error()."<br />$sql") ;
+			die("UNABLE TO INSERT DATA IN store()\n".mysql_error()."\n$sql") ;
 		else
 			return false ;
 	}
