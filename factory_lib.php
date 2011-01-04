@@ -47,7 +47,7 @@ class Factory {
 	}
 	
 	public function get($varname) {
-		return $this->data[$varname] ;
+		return array_key_exists($varname, $this->data) ? $this->data[$varname] : null ;
 	}
 	
 	private function escape_column($coldata) {
@@ -99,6 +99,16 @@ class Factory {
 	public static function hash($tablename, $overrides = array()) {
 		$p = new Factory($tablename, $overrides) ;
 		return $p->data ;
+	}
+	
+	public static function truncate($tablename) {
+		if (mysql_query("TRUNCATE `$tablename`")) 
+			return true ;
+		
+		if ($GLOBALS['show_db_errors'])
+			die("UNABLE TO INSERT DATA IN store()\n".mysql_error()."\n$sql") ;
+		else
+			return false ;
 	}
 	
 }

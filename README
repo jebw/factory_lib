@@ -37,3 +37,6 @@ Will create 5 rows, with names Test User 1 to Test User 5.
 You can also use UNIX_TIMESTAMP() and NOW() as magic string values - these 
 will get passed through to mysql automatically rather than being escaped and
 inserted as text.
+
+Factory::truncate('my_table_name') will trunctate the named table (good for 
+the setUp() function in unit tests).

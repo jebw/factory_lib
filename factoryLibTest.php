@@ -84,6 +84,14 @@ class factoryLibTest extends PHPUnit_Framework_TestCase {
 		$this->assertNotEquals(false, $this->findPersonByEmail('test4@testhost.com')) ;
 	}
 	
+	function testCanTruncate() {
+		Factory::create('person') ;
+		$this->assertEquals(1, $this->countPeople()) ;
+		
+		Factory::truncate('person') ;
+		$this->assertEquals(0, $this->countPeople()) ;
+	}
+	
 	private function countPeople() {
 		($r = mysql_query("SELECT COUNT(*) AS count FROM person")) || die("UNABLE TO COUNT PEOPLE") ;
 		$c = mysql_fetch_assoc($r) ;
